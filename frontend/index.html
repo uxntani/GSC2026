@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Class2.0</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- ============================================================
+     AUTH SCREEN (shown when not logged in)
+     ============================================================ -->
+<!-- AUTH SCREEN -->
+<div id="authScreen" class="auth-screen">
+  <div class="auth-box glass">
+
+    <!-- Login Form -->
+    <div id="loginForm" class="auth-form active">
+      <h2 class="auth-title">Welcome Back 👋</h2>
+      <p class="auth-sub">Login to Class2.0</p>
+      <input type="email" id="loginEmail" placeholder="Email" class="auth-input"/>
+      <div style="position: relative;">
+        <input type="password" id="loginPassword" placeholder="Password" class="auth-input"/>
+        <i class="fa fa-eye" onclick="togglePassword('loginPassword', this)"
+        style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer;"></i>
+      </div>
+      <p id="loginError" class="auth-error"></p>
+      <button class="auth-btn" id="loginBtn" onclick="handleLogin()">Login</button>
+      <p class="auth-link" onclick="showForgotPassword()">Forgot password?</p>
+      <p class="auth-switch">Don't have an account? <span onclick="showSignup()">Sign Up</span></p>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signupForm" class="auth-form">
+      <h2 class="auth-title">Create Account 🎓</h2>
+      <p class="auth-sub">Join Class2.0</p>
+      <input type="email" id="signupEmail" placeholder="Email" class="auth-input"/>
+      <input type="text" id="signupUniversity" placeholder="University Name" class="auth-input"/>
+      <div style="position: relative;">
+        <input type="password" id="signupPassword" placeholder="Password" class="auth-input"/>
+        <i class="fa fa-eye" onclick="togglePassword('signupPassword', this)"
+        style="position:absolute; right:12px; top:50%; transform:translateY(-50%); cursor:pointer;"></i>
+      </div>
+      <p id="signupError" class="auth-error"></p>
+      <button class="auth-btn" id="signupBtn" onclick="handleSignup()">Sign Up</button>
+      <p class="auth-switch">Already have an account? <span onclick="showLogin()">Login</span></p>
+    </div>
+
+    <!-- OTP Verification Form -->
+    <div id="otpForm" class="auth-form">
+      <h2 class="auth-title">Verify Email ✉️</h2>
+      <p class="auth-sub">Enter the 6-digit code sent to <span id="otpEmailDisplay"></span></p>
+      <input type="text" id="otpInput" placeholder="6-digit OTP" class="auth-input" maxlength="6"/>
+      <p id="otpError" class="auth-error"></p>
+      <button class="auth-btn" id="otpBtn" onclick="handleVerifyOTP()">Verify</button>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div id="forgotForm" class="auth-form">
+      <h2 class="auth-title">Forgot Password 🔑</h2>
+      <p class="auth-sub">We'll send a reset link to your email</p>
+      <input type="email" id="forgotEmail" placeholder="Email" class="auth-input"/>
+      <p id="forgotError" class="auth-error"></p>
+      <button class="auth-btn" id="forgotBtn" onclick="handleForgotPassword()">Send Reset Link</button>
+      <p class="auth-switch"><span onclick="showLogin()">← Back to Login</span></p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================================================
+     MAIN APP (shown after login)
+     ============================================================ -->
+<div id="appScreen" class="app-screen hidden">
+
+  <!-- ── FIXED HEADER ── -->
+  <header class="app-header glass">
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">
+      <i class="fa fa-bars"></i>
+    </button>
+    <h1 class="header-title">Class2.0</h1>
+  </header>
+
+  <!-- ── LAYOUT WRAPPER ── -->
+  <div class="layout">
+
+    <!-- ── LEFT SIDEBAR ── -->
+    <aside id="sidebar" class="sidebar glass">
+      <nav class="sidebar-nav">
+        <button class="nav-btn" onclick="openProfile()"   title="Profile">
+          <i class="fa fa-user-circle"></i><span>Profile</span>
+        </button>
+        <button class="nav-btn" onclick="openModal('teachers')" title="Teacher Info">
+          <i class="fa fa-chalkboard-teacher"></i><span>Teachers</span>
+        </button>
+        <button class="nav-btn" onclick="openModal('rooms')" title="Room Info">
+          <i class="fa fa-door-open"></i><span>Rooms</span>
+        </button>
+        <button class="nav-btn" onclick="openModal('classes')" title="Class Info">
+          <i class="fa fa-book"></i><span>Classes</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="nav-btn theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+          <i class="fa fa-circle-half-stroke"></i><span>Theme</span>
+        </button>
+        <button class="nav-btn logout-btn" onclick="handleLogout()" title="Logout">
+          <i class="fa fa-right-from-bracket"></i><span>Logout</span>
+        </button>
+        <button class="nav-btn settings-btn" onclick="handleSettings()" title="Settings">
+          <i class="fa-solid fa-gear"></i><span>Settings</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── MAIN CONTENT ── -->
+    <main class="main-content">
+
+      <!-- Add Teacher / Room / Class cards -->
+      <div class="cards-grid">
+
+        <div class="card glass">
+          <h2><i class="fa fa-chalkboard-teacher"></i> Add Teacher</h2>
+          <input type="text"   id="tName"    placeholder="Name"            class="field"/>
+          <input type="text"   id="tSubject" placeholder="Subject"         class="field"/>
+          <input type="text"   id="tSlots"   placeholder="Slots (9AM,10AM)" class="field"/>
+          <button class="add-btn" onclick="addTeacher()"><i class="fa fa-plus"></i> Add</button>
+        </div>
+
+        <div class="card glass">
+          <h2><i class="fa fa-door-open"></i> Add Room</h2>
+          <input type="text"   id="rNumber"   placeholder="Room Number" class="field"/>
+          <input type="number" id="rCapacity" placeholder="Capacity"    class="field"/>
+          <button class="add-btn" onclick="addRoom()"><i class="fa fa-plus"></i> Add</button>
+        </div>
+
+        <div class="card glass">
+          <h2><i class="fa fa-book"></i> Add Class</h2>
+          <input type="text"   id="cSubject"  placeholder="Subject"  class="field"/>
+          <input type="number" id="cStudents" placeholder="Students" class="field"/>
+          <input type="text"   id="cPriority" placeholder="Priority" class="field"/>
+          <button class="add-btn" onclick="addClass()"><i class="fa fa-plus"></i> Add</button>
+        </div>
+
+      </div>
+
+      <!-- Action buttons -->
+      <div class="action-btns">
+        <button class="main-btn" onclick="getSchedule()">
+          <i class="fa fa-wand-magic-sparkles"></i> Generate Schedule
+        </button>
+        <button class="clear-btn" onclick="clearData()">
+          <i class="fa fa-trash"></i> Clear All Data
+        </button>
+      </div>
+
+      <!-- Schedule Table (hidden until generated) -->
+      <section id="scheduleSection" class="hidden">
+        <h2 class="section-title">Generated Schedule</h2>
+        <div class="table-container glass">
+          <table id="scheduleTable">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th>Room</th>
+                <th>Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Analytics (hidden until generated) -->
+      <section id="analyticsSection" class="hidden">
+        <h2 class="section-title">Analytics Dashboard</h2>
+        <div class="charts-grid">
+          <div class="chart-card glass">
+            <h3>Allocation Status</h3>
+            <canvas id="allocationChart"></canvas>
+          </div>
+          <div class="chart-card glass">
+            <h3>Teacher Load</h3>
+            <canvas id="teacherChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- end .layout -->
+</div><!-- end #appScreen -->
+
+
+<!-- ============================================================
+     RIGHT PANEL — Profile
+     ============================================================ -->
+<div id="profilePanel" class="side-panel glass">
+  <button class="panel-close" onclick="closeProfile()"><i class="fa fa-xmark"></i></button>
+  <div class="panel-body">
+    <div class="avatar-circle"><i class="fa fa-user fa-2x"></i></div>
+    <h4 id="profileUsername">Username</h4>
+    <p class="role-badge">Admin</p>
+    <label class="field-label">University Name</label>
+    <input type="text" id="profileUniversity" class="field" placeholder="Enter university name"/>
+    <button class="auth-btn" onclick="saveProfile()">Save</button>
+  </div>
+</div>
+<div id="profileOverlay" class="overlay" onclick="closeProfile()"></div>
+
+
+<!-- ============================================================
+     MODAL — Teachers / Rooms / Classes
+     ============================================================ -->
+<div id="infoModal" class="modal-overlay hidden" onclick="closeModalOutside(event)">
+  <div class="modal-box glass">
+    <button class="panel-close" onclick="closeModal()"><i class="fa fa-xmark"></i></button>
+    <h2 id="modalTitle">Info</h2>
+    <div id="modalBody" class="modal-body">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+<!-- ============================================================
+     SETTINGS MODAL
+     ============================================================ -->
+<div id="settingsModal" class="modal-overlay hidden" onclick="closeSettingsOutside(event)">
+  <div class="modal-box glass" style="max-width:420px;text-align:center;">
+    <button class="panel-close" onclick="closeSettings()"><i class="fa fa-xmark"></i></button>
+    <h2 style="font-family:'Poppins',sans-serif;margin-bottom:8px;">Settings</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:24px;">
+      Manage your account settings
+    </p>
+    <hr style="border-color:var(--glass-border);margin-bottom:24px;"/>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <button
+        class="clear-btn"
+        style="width:100%;justify-content:center;border-radius:10px;padding:13px;"
+        onclick="openDeleteStep1()">
+        <i class="fa fa-triangle-exclamation"></i>&nbsp; Delete Account Permanently
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DELETE ACCOUNT — STEP 1: Email + Password verification
+     ============================================================ -->
+<div id="deleteStep1Modal" class="modal-overlay hidden" onclick="closeDeleteStep1Outside(event)">
+  <div class="modal-box glass" style="max-width:440px;">
+    <button class="panel-close" onclick="closeDeleteStep1()"><i class="fa fa-xmark"></i></button>
+    <h2 style="font-family:'Poppins',sans-serif;color:#ff1313;">Delete Account</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin:8px 0 20px;">
+      This action is <strong style="color:#ff1313;">irreversible</strong>. All your teachers, rooms,
+      and classes will be permanently erased. Enter your password to continue.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <input
+        type="password"
+        id="deletePassword"
+        placeholder="Your current password"
+        class="auth-input"
+        style="width:100%;"/>
+      <p id="deleteStep1Error" class="auth-error"></p>
+      <button class="clear-btn" id="deleteStep1Btn"
+        style="width:100%;justify-content:center;border-radius:10px;padding:13px;"
+        onclick="handleRequestDelete()">
+        <i class="fa fa-envelope"></i>&nbsp; Send Verification Code
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DELETE ACCOUNT — STEP 2: OTP + "DELETE" confirmation
+     ============================================================ -->
+<div id="deleteStep2Modal" class="modal-overlay hidden" onclick="closeDeleteStep2Outside(event)">
+  <div class="modal-box glass" style="max-width:440px;">
+    <button class="panel-close" onclick="closeDeleteStep2()"><i class="fa fa-xmark"></i></button>
+    <h2 style="font-family:'Poppins',sans-serif;color:#ff1313;">
+      <i class="fa-solid fa-triangle-exclamation"></i> Final Confirmation
+    </h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin:8px 0 20px;">
+      Enter the 6-digit code sent to your email, then type
+      <strong style="color:#ff1313;letter-spacing:2px;">DELETE</strong> to confirm.
+    </p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <input
+        type="text"
+        id="deleteOTP"
+        placeholder="6-digit verification code"
+        class="auth-input"
+        maxlength="6"
+        style="width:100%;letter-spacing:4px;text-align:center;font-size:1.1rem;"/>
+      <input
+        type="text"
+        id="deleteConfirmText"
+        placeholder='Type DELETE to confirm'
+        class="auth-input"
+        maxlength="6"
+        style="width:100%;text-align:center;font-size:1rem;color:#ff1313;font-weight:700;"/>
+      <p id="deleteStep2Error" class="auth-error"></p>
+      <button class="clear-btn" id="deleteStep2Btn"
+        style="width:100%;justify-content:center;border-radius:10px;padding:13px;"
+        onclick="handleConfirmDelete()">
+        <i class="fa fa-skull"></i>&nbsp; Permanently Delete My Account
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
