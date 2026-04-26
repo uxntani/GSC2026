@@ -12,7 +12,7 @@
      9. Init
    ============================================================ */
 
-const API = 'http://localhost:3000';   // ← change if your backend port differs
+const API = 'https://classroom-5cu3.onrender.com';   // ← change if your backend port differs
 
 /* ────────────────────────────────────────────────
    1. AUTH — localStorage-based

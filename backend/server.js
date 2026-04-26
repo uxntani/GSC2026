@@ -26,4 +26,4 @@ app.use('/rooms', require('./routes/roomRoutes'));
 app.use('/classes', require('./routes/classRoutes'));
 app.use('/allocate', require('./routes/allocationRoutes'));
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+app.listen(3000, () => console.log('Server running on https://classroom-5cu3.onrender.com'));
