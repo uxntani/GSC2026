@@ -143,14 +143,14 @@ Class2.0/
 ### Class Info
 ![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/class.png)
 
+### Toogle Theme (Dark)
+![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/dark.png)
+
 ### Generated Time Table
 ![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/timetable.png)
 
 ### Analytics Dashboard
 ![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/analytics.png)
-
-### Toogle Theme (Dark)
-![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/dark.png)
 
 ### Signup Page
 ![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/signup.png)
