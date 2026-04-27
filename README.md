@@ -1,4 +1,5 @@
 # Class2.0 - Scheduling Made Easier
+Website is Live at : https://class20-three.vercel.app/
 
 ---
 
