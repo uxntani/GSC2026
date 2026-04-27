@@ -160,3 +160,13 @@ Class2.0/
 
 ### Forgot Password
 ![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/forget.png)
+
+---
+
+## ⚙️ Wireframe Diagram
+![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/wireframe.png)
+
+---
+
+## 📶 Workflow Diagram
+![Screenshot](https://raw.githubusercontent.com/uxntani/GSC2026/refs/heads/main/readme_assets/workflow.png)
